@@ -1,0 +1,10 @@
+target/
+dbt_packages/
+logs/
+.user.yml
+.python-version
+.vscode
+.venv/
+.envrc
+.idea/
+.DS_Store
