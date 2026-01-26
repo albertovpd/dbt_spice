@@ -20,7 +20,16 @@ The aim of this repository is both to provide tools for **Heavy crunching data**
 Currently focused on GCP work with BigQuery. 
 Support to the mission & PRs are also accepted.
 
-Maybe one day this can be turned into a DBT package to install.
+### How to use it
+
+- Declare in `your_dbt_repo/packages.yml`:
+```
+packages:
+  - git: "https://github.com/albertovpd/dbt_spice.git"
+    revision: main
+```
+
+- Run `dbt deps` from your terminal
 
 
 ## Development  <a name="development"></a>
