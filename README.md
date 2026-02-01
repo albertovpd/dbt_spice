@@ -1,29 +1,13 @@
 # DBT SPICE
 
-## Table of contents
+A production-ready dbt package to provide advanced data engineering utilities for BigQuery environments, focusing on data quality, metadata management, and analytical operations at scale.
 
-- [Introduction](#intro)
-- [Development](#development)
-    - [Methodology](#methodology)
-    - [Features](#features)
-        - [Utils](#utils)
-            - [Bigquery autocleaner](#bq-autocleaner)
-        - [Numerical processing](#numerical-processing)
-        - [String processing](#string-processing)
-    - [Work in progress and backlog](#work-in-progress)
-- [Contact](#contact)
-
-## Introduction  <a name="intro"></a>
-
-The aim of this repository is both to provide tools for **Heavy crunching data** (deep statistical analyses, Machine Learning methods refactored to DBT Jinja SQL, etc) and **Big Data best practices** with DBT (cleaners to run be triggered to maintain your datasets unpolluted, metadata crawlers for BigQuery, etc).
-
-Currently focused on GCP work with BigQuery. 
-Support to the mission & PRs are also accepted.
+Support to the mission & PRs are accepted.
 
 ### How to use it
 
 - Declare in `your_dbt_repo/packages.yml`:
-```
+```yml
 packages:
   - git: "https://github.com/albertovpd/dbt_spice.git"
     revision: main
@@ -31,80 +15,34 @@ packages:
 
 - Run `dbt deps` from your terminal
 
+You can now use all macros from the `macros/` folder without adding them to your local repository.
 
-## Development  <a name="development"></a>
+### Current available methods:
 
-<p align="center">
-    <img src="catstruction.png" width="150">
-</p>
+- BigQuery autocleaner: 
+```bash
+dbt run-operation bq_cleaner --args '{"dry_run": true}'
+```
+
+- For all columns of a BigQuery table, create tables/views with the distinct values of those columns:
+```bash
+dbt run-operation generate_distinct_value_tables --args '{"source_table": "project.dataset.table", "destination_dataset": "my_dataset", "entity_type": "view","dry_run": true}'
+```
 
 
-### Methodology  <a name="methodology"></a>
+## Methodology
 
-Data processing macros will be developed using dummy CSVs as DBT seeds. Then they will be run against massive columns. Processing rows and computing times will be added to the documentation
+For crunching-data macros, I initially planned to use CSV seeds for testing (input data, expected outputs, and validation). However, including seeds in a dbt package creates dependency conflicts for users consuming the package via `dbt deps`. This approach needs to be reconsidered for future macro development.
 
 Currently working with `Python 3.11.9`. DBT/SQL libraries at `requirements.txt`
 
-- Macros for data processing will be tested using CSVs as seeds to create the input and expected output
+## Jump in
 
-### Features  <a name="features"></a>
-
-#### Utils  <a name="utils"></a>
-
-##### BigQuery autocleaner <a name="bq-autocleaner"></a>
-
-Description:
-
-Helps to keep the BigQuery environment clean and organized. Automatically removes redundant objects in BigQuery (tables that are not needed anymore, tables that were renamed and the old versions still exist, etc)
-
-Path: 
-
-`macros/utils/bq_cleaner.sql`
-
-#### Numerical processing  <a name="numerical-processing"></a>
-
-...
-
-#### String processing  <a name="string-processing"></a>
-
-...
-
-------------
-------------
-
-### Work in progress and backlog  <a name="work-in-progress"></a>
-
-<details>
-<summary>⚒️ In progress</summary>
-
-**String Occurrence Count**
-
-
-</details>
-
-<details>
-<summary>📋 TODO</summary>
-
-```
 If there is a specific functionality that you would like to cover with DBT, contact me. 
 Also support and PRs are accepted
-```
-
-**TDF-IDF**
-
-**Max-min Scaler**
-
-**Z-score Scaler**
-
-</details>
 
 
-------------
-------------
-
-
-
-### Contact  <a name="contact"></a>
+## Contact
 
 - [LinkedIn](https://www.linkedin.com/in/alberto-vargas-pina/)
 
